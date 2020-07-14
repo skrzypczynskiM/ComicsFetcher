@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar, ScrollView } from 'react-native';
 import axios from 'axios';
+import styled from 'styled-components/native';
 
 import Item from './components/Item';
+import Header from './components/Header';
+
+const Container = styled.View`
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+const PageView = styled.SafeAreaView`
+  margin-top: ${(props) => `${props.padding}px` || 0};
+  background: #dcdcdc;
+`;
 
 export default function App() {
   const [comics, setComics] = useState([]);
@@ -36,6 +49,12 @@ export default function App() {
     return comics;
   };
 
+  const renderItems = (arr) => {
+    return arr.map(({ title, img }) => {
+      return <Item title={title} path={img} key={Math.random()} />;
+    });
+  };
+
   useEffect(() => {
     (async () => {
       const lastComic = await fetchLastComicsId();
@@ -45,17 +64,13 @@ export default function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Here are my comics:</Text>
-    </View>
+    <PageView padding={StatusBar.currentHeight}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Container>
+          <Header title="A webcomic of romance, sarcasm, math, and language" />
+          {comics.length > 0 && renderItems(comics)}
+        </Container>
+      </ScrollView>
+    </PageView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
