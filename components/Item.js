@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 const ItemContainer = styled.TouchableOpacity`
@@ -16,8 +15,6 @@ const ItemContainer = styled.TouchableOpacity`
 `;
 
 const TitleContainer = styled.View`
-  /* background-color: #f4f4f4; */
-  align-items: flex-start;
   justify-content: flex-start;
   flex: 2;
   align-self: flex-start;
@@ -28,7 +25,6 @@ const Title = styled.Text`
 
 const Icon = styled.Image`
   flex: 1;
-
   width: 80px;
   height: 80px;
   border-radius: 3px;
@@ -36,10 +32,17 @@ const Icon = styled.Image`
 `;
 
 export default Item = (props) => {
-  const { title, path } = props;
+  const { title, path, navigation } = props;
 
   return (
-    <ItemContainer>
+    <ItemContainer
+      onPress={() => {
+        navigation.navigate('Details', {
+          title,
+          path,
+        });
+      }}
+    >
       <TitleContainer>
         <Title>{title}</Title>
       </TitleContainer>
@@ -48,18 +51,3 @@ export default Item = (props) => {
     </ItemContainer>
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     // backgroundColor: 'dodgerblue',
-//     borderWidth: 1,
-//     borderColor: '#20232a',
-//     borderRadius: 6,
-//     flexDirection: 'row',
-//     marginVertical: 10,
-//     marginHorizontal: 5,
-
-//     justifyContent: 'space-between',
-//   },
-// });
