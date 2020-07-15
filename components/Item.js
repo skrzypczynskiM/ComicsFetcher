@@ -15,24 +15,26 @@ const ItemContainer = styled.TouchableOpacity`
 `;
 
 const TitleContainer = styled.View`
-  justify-content: flex-start;
-  flex: 2;
+  flex: 0.6;
   align-self: flex-start;
+  background: ${(props) => props.bgColor || 'transparent'};
 `;
 const Title = styled.Text`
   font-size: 18px;
+  border-radius: 8px;
 `;
 
 const Icon = styled.Image`
-  flex: 1;
+  flex: 0.3;
   width: 80px;
   height: 80px;
   border-radius: 3px;
   overflow: hidden;
+  background: ${(props) => props.bgColor || 'transparent'};
 `;
 
 export default Item = (props) => {
-  const { title, path, navigation } = props;
+  const { title, path, navigation, isPlaceholder } = props;
 
   return (
     <ItemContainer
@@ -44,10 +46,10 @@ export default Item = (props) => {
       }}
     >
       <TitleContainer>
-        <Title>{title}</Title>
+        <Title bgColor={isPlaceholder && '#dcdcdc'}>{title}</Title>
       </TitleContainer>
 
-      <Icon source={{ uri: path }} />
+      <Icon source={{ uri: path }} bgColor={isPlaceholder && '#dcdcdc'} />
     </ItemContainer>
   );
 };

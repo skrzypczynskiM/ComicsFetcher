@@ -7,7 +7,7 @@ import axios from 'axios';
 import styled from 'styled-components/native';
 
 import Item from '../components/Item';
-import Header from '../components/Header';
+import Header from '../layout/Header';
 
 const Container = styled.View`
   align-items: center;
@@ -23,6 +23,7 @@ const PageView = styled.SafeAreaView`
 
 export default function Home({ navigation }) {
   const [comics, setComics] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   // default number of items = 8
   const numberOfComics = 8;
@@ -56,15 +57,30 @@ export default function Home({ navigation }) {
   const renderItems = (arr) => {
     return arr.map(({ title, img }) => {
       return (
-        <Item title={title} path={img} key={uuid()} navigation={navigation} />
+        <Item
+          title={title}
+          path={img}
+          key={uuid()}
+          navigation={navigation}
+          isPlaceholder={false}
+        />
       );
     });
+  };
+
+  const renderPlaceholders = () => {
+    const placeholders = [];
+    for (let i = 0; i < numberOfComics; i++) {
+      placeholders.push(<Item key={uuid()} isPlaceholder={true} />);
+    }
+    return placeholders;
   };
 
   useEffect(() => {
     (async () => {
       const lastComic = await fetchLastComicsId();
       const allComics = await fetchAllComics(lastComic);
+      setIsLoading(false);
       setComics(allComics);
     })();
   }, []);
@@ -74,7 +90,7 @@ export default function Home({ navigation }) {
       <ScrollView showsVerticalScrollIndicator={false}>
         <Container>
           <Header title="A webcomic of romance, sarcasm, math, and language" />
-          {renderItems(comics)}
+          {isLoading ? renderPlaceholders() : renderItems(comics)}
         </Container>
       </ScrollView>
     </PageView>
