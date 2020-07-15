@@ -16,7 +16,6 @@ const Container = styled.View`
 `;
 
 const PageView = styled.SafeAreaView`
-  /* padding-top: ${(props) => `${props.padding}px` || 0}; */
   flex: 1;
   background-color: ${({ theme }) => theme.colors.PRIMARY_BG_COLOR};
 `;
@@ -25,29 +24,24 @@ export default function Home({ navigation }) {
   const [comics, setComics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // default number of items = 8
+  // default number of comics to fetch
   const numberOfComics = 8;
-  const url = 'https://xkcd.com/info.0.json';
 
-  // generate dynamic endpoint for a single comic
-  const generateURL = (id) => {
-    return `http://xkcd.com/${id}/info.0.json`;
-  };
-
-  const fetchSingleComic = async (id) => {
-    const xkcd_URL = generateURL(id);
-    return await axios.get(xkcd_URL);
-  };
-
-  const fetchLastComicsId = async () => {
+  const fetchLastComicsId = async (url) => {
     let res = await axios.get(url);
     return res.data.num;
+  };
+
+  // generate dynamic endpoint and fetch single comic
+  const fetchSingleComic = async (id) => {
+    const xkcd_URL = `http://xkcd.com/${id}/info.0.json`;
+    return await axios.get(xkcd_URL);
   };
 
   const fetchAllComics = async (lastComic) => {
     let comics = [];
     for (let i = 0; i < numberOfComics; i++) {
-      let res = await fetchSingleComic(lastComic - i);
+      const res = await fetchSingleComic(lastComic - i);
       const { title, img } = res.data;
       comics.push({ title, img });
     }
@@ -68,6 +62,7 @@ export default function Home({ navigation }) {
     });
   };
 
+  // render empty placeholder for each comic
   const renderPlaceholders = () => {
     const placeholders = [];
     for (let i = 0; i < numberOfComics; i++) {
@@ -78,7 +73,7 @@ export default function Home({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      const lastComic = await fetchLastComicsId();
+      const lastComic = await fetchLastComicsId('https://xkcd.com/info.0.json');
       const allComics = await fetchAllComics(lastComic);
       setIsLoading(false);
       setComics(allComics);

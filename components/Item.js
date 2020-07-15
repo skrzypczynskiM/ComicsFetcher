@@ -35,9 +35,7 @@ const Icon = styled.Image`
   background: ${(props) => props.bgColor || 'transparent'};
 `;
 
-export default Item = (props) => {
-  const { title, path, navigation, isPlaceholder } = props;
-
+export default Item = ({ title, path, navigation, isPlaceholder }) => {
   return (
     <ItemContainer
       onPress={() => {
