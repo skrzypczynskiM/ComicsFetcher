@@ -6,7 +6,7 @@ const ItemContainer = styled.TouchableOpacity`
   margin: 5px 0;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #f4f4f4;
+  background-color: ${({ theme }) => theme.colors.SECONDARY_BG_COLOR};
   align-items: center;
   padding: 15px 10px;
   width: 95%;
@@ -19,8 +19,10 @@ const TitleContainer = styled.View`
   align-self: flex-start;
 `;
 const Title = styled.Text`
-  font-size: 18px;
+  font-size: 16px;
   border-radius: 8px;
+  font-weight: bold;
+  color: ${({ theme }) => theme.colors.PRIMARY_TEXT_COLOR};
   background: ${(props) => props.bgColor || 'transparent'};
 `;
 
@@ -46,10 +48,14 @@ export default Item = (props) => {
       }}
     >
       <TitleContainer>
-        <Title bgColor={isPlaceholder && '#dcdcdc'}>{title}</Title>
+        <Title bgColor={isPlaceholder && '#787878'}> {title} </Title>
       </TitleContainer>
-
-      <Icon source={{ uri: path }} bgColor={isPlaceholder && '#dcdcdc'} />
+      <Icon
+        source={{
+          uri: path,
+        }}
+        bgColor={isPlaceholder && '#787878'}
+      />
     </ItemContainer>
   );
 };

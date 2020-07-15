@@ -18,7 +18,7 @@ const Container = styled.View`
 const PageView = styled.SafeAreaView`
   /* padding-top: ${(props) => `${props.padding}px` || 0}; */
   flex: 1;
-  background: #dcdcdc;
+  background-color: ${({ theme }) => theme.colors.PRIMARY_BG_COLOR};
 `;
 
 export default function Home({ navigation }) {

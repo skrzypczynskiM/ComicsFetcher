@@ -13,7 +13,7 @@ const HomeNavigator = () => (
       name="Home"
       component={Home}
       options={{
-        title: 'xkcd',
+        title: 'XKCD',
       }}
     />
     <Screen
