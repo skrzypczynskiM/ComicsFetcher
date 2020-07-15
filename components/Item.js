@@ -17,11 +17,11 @@ const ItemContainer = styled.TouchableOpacity`
 const TitleContainer = styled.View`
   flex: 0.6;
   align-self: flex-start;
-  background: ${(props) => props.bgColor || 'transparent'};
 `;
 const Title = styled.Text`
   font-size: 18px;
   border-radius: 8px;
+  background: ${(props) => props.bgColor || 'transparent'};
 `;
 
 const Icon = styled.Image`
