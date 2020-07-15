@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import uuid from 'uuid-random';
-
-import { StatusBar, ScrollView } from 'react-native';
-
-import axios from 'axios';
 import styled from 'styled-components/native';
+import uuid from 'uuid-random';
+import { StatusBar, ScrollView } from 'react-native';
+import axios from 'axios';
 
 import Item from '../components/Item';
 import Header from '../layout/Header';
@@ -18,6 +16,11 @@ const Container = styled.View`
 const PageView = styled.SafeAreaView`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.PRIMARY_BG_COLOR};
+`;
+
+const HeaderContainer = styled.View`
+  margin-bottom: 30px;
+  flex: 1;
 `;
 
 export default function Home({ navigation }) {
@@ -84,7 +87,9 @@ export default function Home({ navigation }) {
     <PageView padding={StatusBar.currentHeight}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <Container>
-          <Header title="A webcomic of romance, sarcasm, math, and language" />
+          <HeaderContainer>
+            <Header title="A webcomic of romance, sarcasm, math, and language" />
+          </HeaderContainer>
           {isLoading ? renderPlaceholders() : renderItems(comics)}
         </Container>
       </ScrollView>
